@@ -6,7 +6,12 @@ var Server = /** @class */ (function () {
     function Server() {
         this.application = express();
     }
-    Server.prototype.bootstrap = function () {
+    Server.prototype.bootstrap = function (routes) {
+        var _this = this;
+        if (routes === void 0) { routes = []; }
+        routes.forEach(function (route) {
+            route.applyRoutes(_this.application);
+        });
         this.application.listen(Environment_1.Environment.SERVER_PORT);
     };
     return Server;

@@ -9,7 +9,10 @@ export class Server {
     this.application = express();
   }
 
-  public bootstrap(): void {
+  public bootstrap(routes: any[] = []): void {
+    routes.forEach(route => {
+      route.applyRoutes(this.application);
+    });
     this.application.listen(Environment.SERVER_PORT);
   }
 
