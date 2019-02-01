@@ -26,6 +26,9 @@ var Server = /** @class */ (function () {
             .then(function () { return _this.initRoutes(routes); })
             .then(function () { return _this.application.listen(Environment_1.Environment.SERVER_PORT); });
     };
+    Server.prototype.getApplication = function () {
+        return this.application;
+    };
     return Server;
 }());
 exports.Server = Server;

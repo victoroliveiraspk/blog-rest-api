@@ -28,4 +28,8 @@ export class Server {
       .then(() => this.application.listen(Environment.SERVER_PORT));
   }
 
+  public getApplication(): express.Express {
+    return this.application;
+  }
+
 }
