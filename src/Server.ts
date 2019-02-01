@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as mongoose from 'mongoose';
 import { Environment } from './shared/Environment';
 
 export class Server {
@@ -9,11 +10,22 @@ export class Server {
     this.application = express();
   }
 
-  public bootstrap(routes: any[] = []): void {
+  private initDatabase(): Promise<any> {
+    return mongoose.connect(Environment.DATABASE_URL, {
+      useNewUrlParser: true
+    });
+  }
+
+  private initRoutes(routes: any[] = []) {
     routes.forEach(route => {
       route.applyRoutes(this.application);
     });
-    this.application.listen(Environment.SERVER_PORT);
+  }
+
+  public bootstrap(routes: any[] = []): void {
+    this.initDatabase()
+      .then(() => this.initRoutes(routes))
+      .then(() => this.application.listen(Environment.SERVER_PORT));
   }
 
 }
