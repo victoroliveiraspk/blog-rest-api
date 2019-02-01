@@ -13,6 +13,7 @@ export class UserRouter {
   public applyRoutes(application: express.Express): void {
     const router = express.Router();
     router.get('/', this.controller.getAll);
+    router.post('/', this.controller.insert);
     application.use(this.path, router);
   }
 

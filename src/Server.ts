@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
+import * as bodyParser from 'body-parser';
 import { Environment } from './shared/Environment';
 
 export class Server {
@@ -8,6 +9,10 @@ export class Server {
 
   constructor() {
     this.application = express();
+  }
+
+  private initMiddlewares(): void {
+    this.application.use(bodyParser.json());
   }
 
   private initDatabase(): Promise<any> {
@@ -24,12 +29,9 @@ export class Server {
 
   public bootstrap(routes: any[] = []): void {
     this.initDatabase()
+      .then(() => this.initMiddlewares())
       .then(() => this.initRoutes(routes))
       .then(() => this.application.listen(Environment.SERVER_PORT));
-  }
-
-  public getApplication(): express.Express {
-    return this.application;
   }
 
 }

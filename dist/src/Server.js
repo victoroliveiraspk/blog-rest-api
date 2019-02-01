@@ -2,11 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var mongoose = require("mongoose");
+var bodyParser = require("body-parser");
 var Environment_1 = require("./shared/Environment");
 var Server = /** @class */ (function () {
     function Server() {
         this.application = express();
     }
+    Server.prototype.initMiddlewares = function () {
+        this.application.use(bodyParser.json());
+    };
     Server.prototype.initDatabase = function () {
         return mongoose.connect(Environment_1.Environment.DATABASE_URL, {
             useNewUrlParser: true
@@ -23,11 +27,9 @@ var Server = /** @class */ (function () {
         var _this = this;
         if (routes === void 0) { routes = []; }
         this.initDatabase()
+            .then(function () { return _this.initMiddlewares(); })
             .then(function () { return _this.initRoutes(routes); })
             .then(function () { return _this.application.listen(Environment_1.Environment.SERVER_PORT); });
-    };
-    Server.prototype.getApplication = function () {
-        return this.application;
     };
     return Server;
 }());
