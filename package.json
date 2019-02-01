@@ -6,7 +6,7 @@
   "scripts": {
     "build-watch": "./node_modules/.bin/tsc -w",
     "start": "./node_modules/.bin/nodemon ./dist/index.js",
-    "test": "./node_modules/.bin/mocha ./node_modules/.bin/ts-node ./src/**/*.test.ts"
+    "test": "SERVER_POST=3001 DATABASE_URL=mongodb://localhost/blog_test ./node_modules/.bin/mocha ./node_modules/.bin/ts-node ./src/**/*.test.ts"
   },
   "keywords": [],
   "author": "Victor Oliveira <victoroliveiraspk@gmail.com>",

@@ -13,6 +13,7 @@ export class Server {
 
   private initMiddlewares(): void {
     this.application.use(bodyParser.json());
+    this.application.use(bodyParser.urlencoded({ extended: true }));
   }
 
   private initDatabase(): Promise<any> {
@@ -32,6 +33,10 @@ export class Server {
       .then(() => this.initMiddlewares())
       .then(() => this.initRoutes(routes))
       .then(() => this.application.listen(Environment.SERVER_PORT));
+  }
+
+  public getApplication(): express.Express {
+    return this.application;
   }
 
 }
