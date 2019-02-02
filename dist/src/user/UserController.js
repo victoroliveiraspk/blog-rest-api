@@ -28,6 +28,14 @@ var UserController = /** @class */ (function () {
             return next();
         }).catch(next);
     };
+    UserController.prototype.update = function (request, response, next) {
+        var _id = request.body._id;
+        var options = { new: true };
+        UserModel_1.UserModel.findOneAndUpdate({ _id: _id }, request.body, options).then(function (user) {
+            response.json(user);
+            return next();
+        });
+    };
     return UserController;
 }());
 exports.UserController = UserController;

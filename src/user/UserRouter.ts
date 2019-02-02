@@ -14,6 +14,7 @@ export class UserRouter {
     const router = express.Router();
     router.get('/', this.controller.getAll);
     router.post('/', this.controller.insert);
+    router.put('/', this.controller.update)
     application.use(this.path, router);
   }
 
