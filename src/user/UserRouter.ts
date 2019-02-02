@@ -12,6 +12,7 @@ export class UserRouter {
 
   public applyRoutes(application: express.Express): void {
     const router = express.Router();
+    router.get('/:id', this.controller.get);
     router.get('/', this.controller.getAll);
     router.post('/', this.controller.insert);
     router.put('/:id', this.controller.update);

@@ -15,6 +15,13 @@ var UserModel_1 = require("./UserModel");
 var UserController = /** @class */ (function () {
     function UserController() {
     }
+    UserController.prototype.get = function (request, response, next) {
+        var id = request.params.id;
+        UserModel_1.UserModel.findById(id).then(function (user) {
+            response.json(user);
+            return next();
+        }).catch(next);
+    };
     UserController.prototype.getAll = function (request, response, next) {
         UserModel_1.UserModel.find().then(function (users) {
             response.json(users);

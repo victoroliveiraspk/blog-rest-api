@@ -8,6 +8,7 @@ var UserRouter = /** @class */ (function () {
     }
     UserRouter.prototype.applyRoutes = function (application) {
         var router = express.Router();
+        router.get('/:id', this.controller.get);
         router.get('/', this.controller.getAll);
         router.post('/', this.controller.insert);
         router.put('/:id', this.controller.update);

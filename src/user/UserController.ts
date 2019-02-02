@@ -5,6 +5,14 @@ import { UserModel } from './UserModel';
 
 export class UserController implements Controller {
 
+  public get(request: Request, response: Response, next: NextFunction): void {
+    const id = request.params.id;
+    UserModel.findById(id).then(user => {
+      response.json(user);
+      return next();
+    }).catch(next);
+  }
+
   public getAll(request: Request, response: Response, next: NextFunction): void {
     UserModel.find().then(users => {
       response.json(users);
