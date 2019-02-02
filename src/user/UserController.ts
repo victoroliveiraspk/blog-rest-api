@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ModelFindOneAndUpdateOptions } from 'mongoose';
+import { ModelFindByIdAndUpdateOptions } from 'mongoose';
 import { Controller } from '../shared/Controller';
 import { UserModel } from './UserModel';
 
@@ -21,12 +21,20 @@ export class UserController implements Controller {
   }
 
   public update(request: Request, response: Response, next: NextFunction): void {
-    const { _id } = request.body;
-    let options: ModelFindOneAndUpdateOptions = { new: true };
-    UserModel.findOneAndUpdate({ _id }, request.body, options).then(user => {
-      response.json(user);
+    const id = request.params.id;
+    const options: ModelFindByIdAndUpdateOptions = { new: true };
+    UserModel.findByIdAndUpdate(id, request.body, options).then(userUpdated => {
+      response.json(userUpdated);
       return next();
-    });
+    }).catch(next);
+  }
+
+  public delete(request: Request, response: Response, next: NextFunction): void {
+    const id = request.params.id;
+    UserModel.findByIdAndDelete(id).then(() => {
+      response.json();
+      return next();
+    }).catch(next);
   }
 
 }

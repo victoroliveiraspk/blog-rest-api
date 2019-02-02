@@ -10,7 +10,8 @@ var UserRouter = /** @class */ (function () {
         var router = express.Router();
         router.get('/', this.controller.getAll);
         router.post('/', this.controller.insert);
-        router.put('/', this.controller.update);
+        router.put('/:id', this.controller.update);
+        router.delete('/:id', this.controller.delete);
         application.use(this.path, router);
     };
     return UserRouter;

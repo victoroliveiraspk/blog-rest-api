@@ -29,12 +29,19 @@ var UserController = /** @class */ (function () {
         }).catch(next);
     };
     UserController.prototype.update = function (request, response, next) {
-        var _id = request.body._id;
+        var id = request.params.id;
         var options = { new: true };
-        UserModel_1.UserModel.findOneAndUpdate({ _id: _id }, request.body, options).then(function (user) {
-            response.json(user);
+        UserModel_1.UserModel.findByIdAndUpdate(id, request.body, options).then(function (userUpdated) {
+            response.json(userUpdated);
             return next();
-        });
+        }).catch(next);
+    };
+    UserController.prototype.delete = function (request, response, next) {
+        var id = request.params.id;
+        UserModel_1.UserModel.findByIdAndDelete(id).then(function () {
+            response.json();
+            return next();
+        }).catch(next);
     };
     return UserController;
 }());
