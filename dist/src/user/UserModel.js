@@ -29,11 +29,7 @@ exports.userSchema = new mongoose_1.Schema({
         required: false
     }
 });
-exports.userSchema.pre('save', function (next) {
-    if (!this.isModified('password')) {
-        return next();
-    }
-    var user = this;
+var changePasswordToHash = function (user, next) {
     var rounds = Number(Environment_1.Environment.PASSWORD_ROUNDS);
     return bcryptjs_1.genSalt(rounds)
         .then(function (salt) { return bcryptjs_1.hash(user.password, salt); })
@@ -41,5 +37,11 @@ exports.userSchema.pre('save', function (next) {
         user.password = hash;
         return next();
     }).catch(next);
+};
+exports.userSchema.pre('save', function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    changePasswordToHash(this, next);
 });
 exports.UserModel = mongoose_1.model('User', exports.userSchema);

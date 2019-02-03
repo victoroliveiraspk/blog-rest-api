@@ -37,12 +37,7 @@ export const userSchema = new Schema({
   }
 });
 
-userSchema.pre('save', function(next) {
-  if (!this.isModified('password')) {
-    return next();
-  }
-
-  const user: IUserModel = <IUserModel>this;
+const changePasswordToHash = (user: IUserModel, next) => {
   const rounds: number = Number(Environment.PASSWORD_ROUNDS);
 
   return genSalt(rounds)
@@ -51,7 +46,13 @@ userSchema.pre('save', function(next) {
       user.password = hash;
       return next();
     }).catch(next);
+}
 
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+  changePasswordToHash(<IUserModel>this, next);
 });
 
 export const UserModel: Model<IUserModel> = model<IUserModel>('User', userSchema);
