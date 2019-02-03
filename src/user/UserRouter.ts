@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { Express, Router } from 'express';
 import { Controller } from '../shared/Controller';
 
 export class UserRouter {
@@ -10,8 +10,8 @@ export class UserRouter {
     this.controller = controller;
   }
 
-  public applyRoutes(application: express.Express): void {
-    const router = express.Router();
+  public applyRoutes(application: Express): void {
+    const router = Router();
     router.get('/:id', this.controller.get);
     router.get('/', this.controller.getAll);
     router.post('/', this.controller.insert);
