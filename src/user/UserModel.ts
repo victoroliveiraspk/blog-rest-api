@@ -1,4 +1,6 @@
 import { Document, Schema, Model, model } from 'mongoose';
+import { genSalt, hash } from 'bcryptjs';
+import { Environment } from '../shared/Environment';
 
 export interface IUserModel extends Document {
   username: string;
@@ -16,7 +18,8 @@ export const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   email: {
     type: String,
@@ -32,6 +35,23 @@ export const userSchema = new Schema({
     type: Date,
     required: false
   }
+});
+
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  const user: IUserModel = <IUserModel>this;
+  const rounds: number = Number(Environment.PASSWORD_ROUNDS);
+
+  return genSalt(rounds)
+    .then(salt => hash(user.password, salt))
+    .then(hash => {
+      user.password = hash;
+      return next();
+    }).catch(next);
+
 });
 
 export const UserModel: Model<IUserModel> = model<IUserModel>('User', userSchema);
