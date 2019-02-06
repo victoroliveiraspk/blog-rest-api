@@ -23,6 +23,7 @@ export class UserController implements Controller {
   public insert(request: Request, response: Response, next: NextFunction): void {
     const userModel = new UserModel({ ...request.body })
     userModel.save().then(user => {
+      user.password = undefined;
       response.json(user);
       return next();
     }).catch(next);

@@ -31,6 +31,7 @@ var UserController = /** @class */ (function () {
     UserController.prototype.insert = function (request, response, next) {
         var userModel = new UserModel_1.UserModel(__assign({}, request.body));
         userModel.save().then(function (user) {
+            user.password = undefined;
             response.json(user);
             return next();
         }).catch(next);
