@@ -3,11 +3,10 @@ import { expect } from 'chai';
 import * as supertest from 'supertest';
 import { Server } from '../Server';
 import { UserRouter } from './UserRouter'
-import { UserController } from './UserController';
 import { UserModel } from './UserModel';
 
 const routers = [
-  new UserRouter(new UserController())
+  new UserRouter()
 ];
 
 const server = new Server();

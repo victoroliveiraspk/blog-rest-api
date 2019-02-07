@@ -5,10 +5,9 @@ var chai_1 = require("chai");
 var supertest = require("supertest");
 var Server_1 = require("../Server");
 var UserRouter_1 = require("./UserRouter");
-var UserController_1 = require("./UserController");
 var UserModel_1 = require("./UserModel");
 var routers = [
-    new UserRouter_1.UserRouter(new UserController_1.UserController())
+    new UserRouter_1.UserRouter()
 ];
 var server = new Server_1.Server();
 server.bootstrap(routers);

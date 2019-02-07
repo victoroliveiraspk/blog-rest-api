@@ -1,4 +1,5 @@
 import { Express, Router } from 'express';
+import { UserController } from './UserController';
 import { Controller } from '../shared/Controller';
 
 export class UserRouter {
@@ -6,8 +7,8 @@ export class UserRouter {
   private path: string = '/users';
   private controller: Controller;
 
-  constructor(controller: Controller) {
-    this.controller = controller;
+  constructor() {
+    this.controller = new UserController();
   }
 
   public applyRoutes(application: Express): void {
