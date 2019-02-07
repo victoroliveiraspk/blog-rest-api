@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import { Environment } from './shared/Environment';
+import { Routable } from './shared/Routable';
 
 export class Server {
 
@@ -22,7 +23,7 @@ export class Server {
     });
   }
 
-  private initRoutes(routes: any[] = []) {
+  private initRoutes(routes: Routable[] = []) {
     routes.forEach(route => {
       route.applyRoutes(this.application);
     });

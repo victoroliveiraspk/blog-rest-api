@@ -1,8 +1,9 @@
 import { Express, Router } from 'express';
 import { UserController } from './UserController';
 import { Controller } from '../shared/Controller';
+import { Routable } from '../shared/Routable';
 
-export class UserRouter {
+export class UserRouter implements Routable {
 
   private path: string = '/users';
   private controller: Controller;
