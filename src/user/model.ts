@@ -1,13 +1,10 @@
 import { Document, Schema, Model, model } from 'mongoose';
 import { genSalt, hash } from 'bcryptjs';
 import { Environment } from '../shared/environment';
+import { IUser } from './interface';
 
-export interface IUserModel extends Document {
-  username: string;
-  password: string;
-  email: string;
-  createdAt: Date;
-  modifiedAt: Date;
+export interface IUserModel extends IUser, Document {
+
 }
 
 export const userSchema = new Schema({
