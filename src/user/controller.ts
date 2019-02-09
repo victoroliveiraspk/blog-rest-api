@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ModelFindByIdAndUpdateOptions } from 'mongoose';
-import { Controller } from '../shared/Controller';
-import { UserModel } from './UserModel';
+import { Controller } from '../shared/interfaces/controller';
+import { UserModel } from './model';
 
 export class UserController implements Controller {
 

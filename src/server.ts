@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
-import { Environment } from './shared/Environment';
-import { Routable } from './shared/Routable';
+import { Environment } from './shared/environment';
+import { Routable } from './shared/interfaces/routable';
 
 export class Server {
 

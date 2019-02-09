@@ -1,6 +1,6 @@
 import { Document, Schema, Model, model } from 'mongoose';
 import { genSalt, hash } from 'bcryptjs';
-import { Environment } from '../shared/Environment';
+import { Environment } from '../shared/environment';
 
 export interface IUserModel extends Document {
   username: string;

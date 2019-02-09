@@ -1,0 +1,47 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = require("mongoose");
+var bcryptjs_1 = require("bcryptjs");
+var environment_1 = require("../shared/environment");
+exports.userSchema = new mongoose_1.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+        select: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    modifiedAt: {
+        type: Date,
+        required: false
+    }
+});
+var changePasswordToHash = function (user, next) {
+    var rounds = Number(environment_1.Environment.PASSWORD_ROUNDS);
+    return bcryptjs_1.genSalt(rounds)
+        .then(function (salt) { return bcryptjs_1.hash(user.password, salt); })
+        .then(function (hash) {
+        user.password = hash;
+        return next();
+    }).catch(next);
+};
+exports.userSchema.pre('save', function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    changePasswordToHash(this, next);
+});
+exports.UserModel = mongoose_1.model('User', exports.userSchema);

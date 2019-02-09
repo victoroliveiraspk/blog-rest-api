@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Server_1 = require("./src/Server");
-var UserRouter_1 = require("./src/user/UserRouter");
+var server_1 = require("./src/server");
+var router_1 = require("./src/user/router");
 var routes = [
-    new UserRouter_1.UserRouter()
+    new router_1.UserRouter()
 ];
-new Server_1.Server().bootstrap(routes);
+new server_1.Server().bootstrap(routes);

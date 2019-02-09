@@ -1,6 +1,6 @@
-import { Server } from './src/Server';
-import { UserRouter } from './src/user/UserRouter';
-import { Routable } from './src/shared/Routable';
+import { Server } from './src/server';
+import { UserRouter } from './src/user/router';
+import { Routable } from './src/shared/interfaces/routable';
 
 const routes: Routable[] = [
   new UserRouter()
