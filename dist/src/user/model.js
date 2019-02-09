@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
-var bcryptjs_1 = require("bcryptjs");
-var environment_1 = require("../shared/environment");
+const mongoose_1 = require("mongoose");
+const helper_1 = require("./helper");
 exports.userSchema = new mongoose_1.Schema({
     username: {
         type: String,
@@ -29,19 +28,10 @@ exports.userSchema = new mongoose_1.Schema({
         required: false
     }
 });
-var changePasswordToHash = function (user, next) {
-    var rounds = Number(environment_1.Environment.PASSWORD_ROUNDS);
-    return bcryptjs_1.genSalt(rounds)
-        .then(function (salt) { return bcryptjs_1.hash(user.password, salt); })
-        .then(function (hash) {
-        user.password = hash;
-        return next();
-    }).catch(next);
-};
 exports.userSchema.pre('save', function (next) {
     if (!this.isModified('password')) {
         return next();
     }
-    changePasswordToHash(this, next);
+    helper_1.UserHelper.changePasswordToHash(this, next);
 });
 exports.UserModel = mongoose_1.model('User', exports.userSchema);
